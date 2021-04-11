@@ -4,6 +4,11 @@ import vernamEncryption as Vernam
 import vigenerEncryption as Vigener
 import caesarDecryptor as CaesarDec
 
+import RSA.KeyGen as RsaKeyGen
+import RSA.Encryption as Rsa
+
+import streamEncryption as Stream
+
 russian_alphabet = 'абвгдеёжзийклмнопрстуфхчшщъыьэюя'
 english_alphabet = 'abcdefghijklmnopqrstuvwxyz'
 exception_symbols = '.!?:;,_-\n\r\t '
@@ -73,6 +78,30 @@ with open(output_file, 'w', encoding="utf-8") as f:
             sys.exit()
         for var in result:
             f.write(var + '\n\n')
+    elif cipher_type.lower() == 'rsa_keygen':
+        try:
+            nums = message.split()
+            result = RsaKeyGen.keygen_RSA(int(nums[0]), int(nums[1]))
+        except IndexError:
+            print("Error! Incorrect args!")
+            sys.exit()
+
+        f.write('publicKey: ' + str(result['publicKey']) + '\n' +
+                'privateKey: ' + str(result['privateKey']))
+    elif cipher_type.lower() == 'rsa':
+        try:
+            result = Rsa.RSA_encryption(message, key)
+        except ValueError:
+            print("Error! Incorrect args!")
+            sys.exit()
+        f.write(result)
+    elif cipher_type.lower() == 'stream':
+        try:
+            result = Stream.stream_encryption(message, key)
+        except ValueError:
+            print("Error! Incorrect args!")
+            sys.exit()
+        f.write(result)
     else:
         print('Error! Cipher does not exists')
         sys.exit()
