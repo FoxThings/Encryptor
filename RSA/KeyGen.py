@@ -5,9 +5,9 @@ def is_prime(n: int):
     :return True, если число простое, иначе False
     """
     d = 2
-    while n % d != 0:
+    while d * d <= n and n % d != 0:
         d += 1
-    return d == n
+    return d * d > n
 
 
 def keygen_RSA(p: int, q: int):

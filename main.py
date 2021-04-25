@@ -1,4 +1,5 @@
 import sys
+import argparse
 import caesarEncryption as Caesar
 import vernamEncryption as Vernam
 import vigenerEncryption as Vigener
@@ -13,29 +14,28 @@ russian_alphabet = 'абвгдеёжзийклмнопрстуфхчшщъыьэ
 english_alphabet = 'abcdefghijklmnopqrstuvwxyz'
 exception_symbols = '.!?:;,_-\n\r\t '
 
-if len(sys.argv) < 4:
-    print('Error! Not enough args')
-    sys.exit()
+parser = argparse.ArgumentParser()
+parser.add_argument('cipher')
+parser.add_argument('input')
+parser.add_argument('output')
+parser.add_argument('key', nargs='?', default="0")
+parser.add_argument('alphabet', nargs='?', default="rus")
+args = parser.parse_args()
 
-cipher_type = sys.argv[1]
-input_file = sys.argv[2]
-output_file = sys.argv[3]
-
-if len(sys.argv) > 4:
-    key = sys.argv[4]
-else:
-    key = '0'
+cipher_type = args.cipher
+input_file = args.input
+output_file = args.output
+key = args.key
 
 alphabet = russian_alphabet
-if len(sys.argv) > 5:
-    lang = sys.argv[5]
-    if lang.lower() == 'rus':
-        alphabet = russian_alphabet
-    elif lang.lower() == 'eng':
-        alphabet = english_alphabet
-    else:
-        print('Error! Lang does not found!')
-        sys.exit()
+lang = args.alphabet
+if lang.lower() == 'rus':
+    alphabet = russian_alphabet
+elif lang.lower() == 'eng':
+    alphabet = english_alphabet
+else:
+    print('Error! Lang does not found!')
+    sys.exit()
 
 with open(input_file, 'r', encoding="utf-8") as f:
     message = f.read()
