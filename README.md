@@ -1,11 +1,11 @@
 # Encryptor
 
 ### Как запустить?
-1. git clone https://github.com/FoxThings/Encryptor.git
+1. `git clone https://github.com/FoxThings/Encryptor.git`
 2. Запускаем через консоль
 
 ### Аргументы командной строки
-#### Общий синтакси: 
+#### Общий синтаксис: 
 `python main.py [вид шифра] [путь входного файла] [путь выходного файла] [ключ] [язык]`
 
 Последние 2 аргумента опциональны: ключ = '0', язык = rus
